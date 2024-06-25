@@ -1,0 +1,104 @@
+diff --git a/node_modules/tinro/.bun-tag-417489778e70978f b/.bun-tag-417489778e70978f
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/index.d.ts b/index.d.ts
+index 3f969c383befbe9de4780be8598b9f5e6ca6fe31..2d2a990da5fd6cf2d6ee8435ccca14703a74d666 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -1,3 +1,5 @@
++import type { SvelteComponent } from "svelte";
++
+ interface TinroRoute {
+     url: string
+     from: string
+@@ -81,37 +83,40 @@ declare interface TinroRouter {
+ export const active: any
+ export function meta(): TinroRouteMeta
+ export const router: TinroRouter
+-export class Route {
+-    $$prop_def: {
+-      /**
+-       * Exact o relative path of the route
+-       * @default "/*"
+-       */
+-      path?: string;
+-  
+-      /**
+-       * Is route fallback
+-       * @default false
+-       */
+-      fallback?: boolean;
+-
+-      /**
+-       * Redirect route to the specified path
+-       */
+-      redirect?: string;
+-
+-      /**
+-       * Will be show only first matched with URL nested route
+-       * @default false
+-       */
+-      firstmatch?: boolean;
+-
+-      /**
+-       * Name of the route to use in breadcrumbs
+-       * @default null
+-       */
+-      breadcrumb?: string;
+-    };
++
++type RouteArgs = {
++    /**
++    * Exact o relative path of the route
++    * @default "/*"
++    */
++    path?: string;
++
++    /**
++     * Is route fallback
++     * @default false
++     */
++    fallback?: boolean;
++
++    /**
++     * Redirect route to the specified path
++     */
++    redirect?: string;
++
++    /**
++     * Will be show only first matched with URL nested route
++     * @default false
++     */
++    firstmatch?: boolean;
++
++    /**
++     * Name of the route to use in breadcrumbs
++     * @default null
++     */
++    breadcrumb?: string;  
++}
++
++export class Route extends SvelteComponent<RouteArgs> {
++    $$prop_def: RouteArgs;
+   
+     $$slot_def: { default: {
+       /** Current meta for the route */
+diff --git a/package.json b/package.json
+index 94a74e66c2d7b7edb074464d43fca02cb2192b8a..bfca3646aa1d8bd5e26920d036c96a094caa5089 100644
+--- a/package.json
++++ b/package.json
+@@ -6,6 +6,14 @@
+   "module": "dist/tinro.es.js",
+   "svelte": "cmp/index.js",
+   "types": "index.d.ts",
++  "exports": {
++    ".": {
++      "main": "./dist/tinro.js",
++      "module": "./dist/inro.es.js",
++      "svelte": "./cmp/index.js",
++      "types": "./index.d.ts"
++    }
++  },
+   "scripts": {
+     "build": "node esbuild",
+     "dev": "node tests/esbuild.dev --dev",

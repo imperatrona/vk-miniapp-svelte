@@ -1,0 +1,31 @@
+{
+  "name": "vk-miniapp-svelte",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "npm run dev -- --host & npm run tunnel",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json && tsc -p tsconfig.node.json",
+    "tunnel": "vk-tunnel --http-protocol=http --host=localhost --port=5173"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.1.1",
+    "@tsconfig/svelte": "^5.0.4",
+    "@vkontakte/vk-tunnel": "^0.2.2",
+    "svelte": "^4.2.18",
+    "svelte-check": "^3.8.1",
+    "tinro": "^0.6.12",
+    "tslib": "^2.6.3",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1"
+  },
+  "dependencies": {
+    "@vkontakte/vk-bridge": "^2.14.2"
+  },
+  "patchedDependencies": {
+    "tinro@0.6.12": "patches/tinro@0.6.12.patch"
+  }
+}
